@@ -9,12 +9,17 @@ import java.util.List;
 public class Detector implements DelimiterDetector {
     @Override
     public Delimiter detectDelimiter(List<String> lines) {
+        if (lines == null || lines.isEmpty()) {
+            throw new IllegalArgumentException("Ошибка: список пуст");
+        }
         return Arrays.stream(Delimiter.values())
                 .filter(delimiter -> lines.stream()
                         .anyMatch(line -> line.contains(
                                 String.valueOf(delimiter.getSymbol())
                         )))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(
+                        () -> new DelimiterException("Разделитель не найден")
+                );
     }
 }

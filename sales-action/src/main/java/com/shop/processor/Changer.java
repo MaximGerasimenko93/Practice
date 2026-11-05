@@ -5,17 +5,17 @@ import com.shop.service.DelimiterChanger;
 
 import java.util.List;
 
-public class DelimiterStrategy implements DelimiterChanger {
+public class Changer implements DelimiterChanger {
     private final Delimiter delimiter;
 
     @Override
-    public List<String> changeDelimiter(List<String> lines) {
+    public List<String> changeDelimiter(List<String> lines, char newDelimiter) {
         return lines.stream()
-                .map(line -> line.replace(delimiter.getSymbol(), ' '))
+                .map(line -> line.replace(delimiter.getSymbol(), newDelimiter))
                 .toList();
     }
 
-    public DelimiterStrategy(Delimiter delimiter) {
+    public Changer(Delimiter delimiter) {
         this.delimiter = delimiter;
     }
 }
