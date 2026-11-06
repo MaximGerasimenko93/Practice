@@ -3,25 +3,25 @@ package com.shop.entity;
 import java.time.LocalDateTime;
 
 public class Order {
-    private LocalDateTime id;
+    private LocalDateTime time;
     private String name;
-    private Integer amount;
+    private int amount;
 
-    public Order(LocalDateTime id, String name, Integer amount) {
-        this.id = id;
+    public Order(LocalDateTime time, String name, int amount) {
+        this.time = time;
         this.name = name;
         this.amount = amount;
     }
 
-    public LocalDateTime getId() {
-        return id;
+    public LocalDateTime getTime() {
+        return time;
     }
 
     public String getName() {
         return name;
     }
 
-    public Integer getAmount() {
+    public int getAmount() {
         return amount;
     }
 }
