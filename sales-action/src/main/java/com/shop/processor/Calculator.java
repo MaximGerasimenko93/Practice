@@ -9,13 +9,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: Доделать реализацию просчета скидки
-
 public class Calculator implements SaleCalculator {
+
     @Override
     public List<SaleResult> calculate(List<Order> orders, Sale sale) {
         List<SaleResult> saleResult = new ArrayList<>();
         int discount = sale.getStartDiscount();
+
         for (Order order : orders) {
             BigDecimal amount = BigDecimal.valueOf(order.getAmount());
             BigDecimal cost = BigDecimal.valueOf(sale.getCost());
@@ -23,7 +23,11 @@ public class Calculator implements SaleCalculator {
             BigDecimal price = amount
                     .multiply(cost)
                     .multiply(BigDecimal.ONE.subtract(discountCoefficient));
+            String name = order.getName();
+            saleResult.add(new SaleResult(name, price));
+
+            discount = Math.max(discount - sale.getStep(), 0);
         }
-        return null;
+        return saleResult;
     }
 }
