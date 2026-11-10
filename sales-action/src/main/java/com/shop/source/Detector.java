@@ -1,7 +1,4 @@
-package com.shop.processor;
-
-import com.shop.constants.Delimiter;
-import com.shop.service.DelimiterDetector;
+package com.shop.source;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,14 +9,15 @@ public class Detector implements DelimiterDetector {
         if (lines == null || lines.isEmpty()) {
             throw new IllegalArgumentException("Ошибка: список пуст");
         }
-        return Arrays.stream(Delimiter.values())
+        List<Delimiter> delimiters = Arrays.stream(Delimiter.values())
                 .filter(delimiter -> lines.stream()
                         .anyMatch(line -> line.contains(
                                 String.valueOf(delimiter.getSymbol())
                         )))
-                .findFirst()
-                .orElseThrow(
-                        () -> new DelimiterException("Разделитель не найден")
-                );
+                .toList();
+        if (delimiters.size() != 1) {
+            throw new DelimiterException("Некорректное количество разделителей");
+        }
+        return delimiters.getFirst();
     }
 }

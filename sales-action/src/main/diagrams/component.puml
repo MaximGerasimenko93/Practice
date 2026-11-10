@@ -1,0 +1,38 @@
+
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "Пользователь")
+
+Container_Boundary(app, "Sales Application") {
+
+    Component(main, "Main", "Java class", "Координирует выполнение приложения")
+
+    Component(source, "Source", "Package", "Получение и преобразование входных данных")
+
+    Component(sorter, "Sorter", "Java class", "Сортирует заказы по времени")
+    Component(calculator, "Calculator", "Java class", "Рассчитывает стоимость заказов с учётом скидки")
+    Component(aggregator, "Aggregator", "Java class", "Группирует результаты по компаниям и суммирует стоимость")
+
+    Component(service, "Service", "Interfaces", "Контракты операций обработки")
+
+    Component(storage, "Storage", "Package", "Сохранение результатов")
+}
+
+System_Ext(files, "Файловая система")
+
+Rel(user, main, "Взаимодействует через консоль")
+Rel(main, source, "Получает входные данные")
+Rel(main, sorter, "Передаёт заказы")
+Rel(main, calculator, "Запускает расчёт")
+Rel(main, aggregator, "Запускает агрегацию")
+Rel(main, storage, "Передаёт результаты")
+
+Rel(sorter, service, "Реализует OrderSorter")
+Rel(calculator, service, "Реализует SaleCalculator")
+Rel(aggregator, service, "Реализует SaleResultAggregator")
+
+Rel(source, files, "Читает входные файлы")
+Rel(storage, files, "Записывает результаты")
+
+@enduml

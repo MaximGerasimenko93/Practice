@@ -1,4 +1,4 @@
-package com.shop.constants;
+package com.shop.source;
 
 public enum Delimiter {
     PIPE('|'),

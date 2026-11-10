@@ -1,0 +1,13 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(user, "Пользователь", "Выбирает входной файл и получает результат")
+
+System(sales, "Sales Application", "Java Console Application для обработки заказов")
+
+System_Ext(files, "Файловая система", "Хранит входные файлы и результаты обработки")
+
+Rel(user, sales, "Выбирает файл, получает результат")
+Rel(sales, files, "Читает входные файлы и сохраняет результаты")
+
+@enduml

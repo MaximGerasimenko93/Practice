@@ -1,12 +1,7 @@
-package com.shop.processor;
+package com.shop.source;
 
-import com.shop.constants.Delimiter;
 import com.shop.entity.Order;
-import com.shop.service.FileSource;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +11,7 @@ public class FileAdapter implements FileSource {
     private final Delimiter delimiter;
 
     @Override
-    public List<Order> readFile(Path path) throws IOException {
-        List<String> lines = Files.readAllLines(path);
+    public List<Order> readLines(List<String> lines) {
         List<Order> orders = new ArrayList<>();
 
         for (String line : lines) {

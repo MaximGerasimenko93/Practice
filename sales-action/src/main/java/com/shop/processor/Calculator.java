@@ -19,7 +19,7 @@ public class Calculator implements SaleCalculator {
         for (Order order : orders) {
             BigDecimal amount = BigDecimal.valueOf(order.getAmount());
             BigDecimal cost = BigDecimal.valueOf(sale.getCost());
-            BigDecimal discountCoefficient = BigDecimal.valueOf(discount).divide(BigDecimal.valueOf(100));
+            BigDecimal discountCoefficient = BigDecimal.valueOf(discount).movePointLeft(2);
             BigDecimal price = amount
                     .multiply(cost)
                     .multiply(BigDecimal.ONE.subtract(discountCoefficient));

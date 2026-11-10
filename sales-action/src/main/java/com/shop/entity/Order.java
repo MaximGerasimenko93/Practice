@@ -3,9 +3,9 @@ package com.shop.entity;
 import java.time.LocalDateTime;
 
 public class Order {
-    private LocalDateTime time;
-    private String name;
-    private int amount;
+    private final LocalDateTime time;
+    private final String name;
+    private final int amount;
 
     public Order(LocalDateTime time, String name, int amount) {
         this.time = time;

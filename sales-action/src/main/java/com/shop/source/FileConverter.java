@@ -1,6 +1,5 @@
-package com.shop.processor;
+package com.shop.source;
 
-import com.shop.constants.Delimiter;
 import com.shop.entity.Order;
 
 import java.time.LocalDateTime;
@@ -13,7 +12,7 @@ public class FileConverter {
         String[] fields = text.split(Pattern.quote(String.valueOf(delimiter.getSymbol())), -1);
 
         if (fields.length != 3) {
-            throw new ArrayIndexOutOfBoundsException("Не все данные внесены");
+            throw new IllegalArgumentException("Не все данные внесены");
         }
 
         LocalDateTime time = LocalDateTime.parse(fields[0]);

@@ -1,4 +1,4 @@
-package com.shop.service;
+package com.shop.storage;
 
 import java.io.IOException;
 import java.math.BigDecimal;
