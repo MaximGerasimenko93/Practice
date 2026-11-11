@@ -7,13 +7,15 @@ import java.util.Scanner;
 public class ConsoleReader {
     public Path selectFile(List<Path> files) {
         Scanner scanner = new Scanner(System.in);
+        final int INDEX_INCREMENT = 1;
+        final int LOW_INPUT_BORDER = 1;
 
         if (files.isEmpty()) {
             throw new IllegalStateException("Папка пуста.");
         }
 
         for (int i = 0; i < files.size(); i++) {
-            System.out.println((i + 1) + ". " + files.get(i).getFileName());
+            System.out.println((i + INDEX_INCREMENT) + ". " + files.get(i).getFileName());
         }
         System.out.println("Введите номер файла, который хотите посчитать:");
 
@@ -28,7 +30,7 @@ public class ConsoleReader {
 
             userNumber = scanner.nextInt();
 
-            if (userNumber >= 1 && userNumber <= files.size()) {
+            if (userNumber >= LOW_INPUT_BORDER && userNumber <= files.size()) {
                 break;
             }
             System.out.println("Неверный ввод. Введите число от 1 до " + files.size());

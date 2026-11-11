@@ -15,18 +15,17 @@ public class Calculator implements SaleCalculator {
     public List<SaleResult> calculate(List<Order> orders, Sale sale) {
         List<SaleResult> saleResult = new ArrayList<>();
         int discount = sale.getStartDiscount();
+        final int LOW_BORDER = 0;
 
         for (Order order : orders) {
             BigDecimal amount = BigDecimal.valueOf(order.getAmount());
             BigDecimal cost = BigDecimal.valueOf(sale.getCost());
             BigDecimal discountCoefficient = BigDecimal.valueOf(discount).movePointLeft(2);
-            BigDecimal price = amount
-                    .multiply(cost)
-                    .multiply(BigDecimal.ONE.subtract(discountCoefficient));
+            BigDecimal price = amount.multiply(cost).multiply(BigDecimal.ONE.subtract(discountCoefficient));
             String name = order.getName();
             saleResult.add(new SaleResult(name, price));
 
-            discount = Math.max(discount - sale.getStep(), 0);
+            discount = Math.max(discount - sale.getStep(), LOW_BORDER);
         }
         return saleResult;
     }

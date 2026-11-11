@@ -10,8 +10,8 @@ public class FileConverter {
     public Order convert(String text, Delimiter delimiter) {
 
         String[] fields = text.split(Pattern.quote(String.valueOf(delimiter.getSymbol())), -1);
-
-        if (fields.length != 3) {
+        final int REQUIRED_ARRAY_SIZE = 3;
+        if (fields.length != REQUIRED_ARRAY_SIZE) {
             throw new IllegalArgumentException("Не все данные внесены");
         }
 
