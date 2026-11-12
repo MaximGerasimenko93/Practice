@@ -17,6 +17,10 @@ public class Calculator implements SaleCalculator {
         int discount = sale.getStartDiscount();
         final int LOW_BORDER = 0;
 
+        if (orders == null || orders.isEmpty()) {
+            throw new IllegalArgumentException("Ошибка: список не может быть пуст");
+        }
+
         for (Order order : orders) {
             BigDecimal amount = BigDecimal.valueOf(order.getAmount());
             BigDecimal cost = BigDecimal.valueOf(sale.getCost());

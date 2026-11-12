@@ -50,13 +50,41 @@ class CalculatorTest {
         assertEquals(0, price2.compareTo(BigDecimal.valueOf(550)));
         assertEquals(0, price3.compareTo(BigDecimal.valueOf(600)));
     }
-}
 
-//    @ParameterizedTest
-//    @CsvSource({"2021-02-09T16:00:22, Industrial, 10",
-//                "2021-02-10T16:00:22, Industrial, 10",
-//                "2021-02-11T16:00:22, Industrial, 10",
-//                "2021-02-12T16:00:22, Industrial, 10"})
-//    void testZeroDiscount(){
-//        //TODO: подумать какие параметры передать в аннотацию и доделать тест на случай, когда скидка опускается до 0.
-//}
+    @ParameterizedTest
+    @CsvSource({"10, 900, 0",
+            "10, 950, 1",
+            "10, 1000, 2",
+            "10, 1000, 3"})
+    void testZeroDiscount(int amount, BigDecimal price, int index) {
+        Sale sale = new Sale(10, 5, 100);
+        Order order1 = new Order(LocalDateTime.parse("2021-02-09T16:00:22"), "Industrial1", amount);
+        Order order2 = new Order(LocalDateTime.parse("2021-02-10T16:00:22"), "Industrial2", amount);
+        Order order3 = new Order(LocalDateTime.parse("2021-02-11T16:00:22"), "Industrial3", amount);
+        Order order4 = new Order(LocalDateTime.parse("2021-02-12T16:00:22"), "Industrial3", amount);
+
+        List<Order> orders = List.of(order1, order2, order3, order4);
+        List<SaleResult> results = calculator.calculate(orders, sale);
+
+        BigDecimal actualPrice = results.get(index).getPrice();
+        assertEquals(0, price.compareTo(actualPrice));
+    }
+
+    @Test
+    void testEmptyOrdersList() {
+        List<Order> orders = List.of();
+        Sale sale = new Sale(10, 5, 100);
+        assertThrows(IllegalArgumentException.class, () -> {
+            calculator.calculate(orders, sale);
+        });
+    }
+
+    @Test
+    void testNullOrdersList() {
+        List<Order> orders = null;
+        Sale sale = new Sale(10, 5, 100);
+        assertThrows(IllegalArgumentException.class, () -> {
+            calculator.calculate(orders, sale);
+        });
+    }
+}
