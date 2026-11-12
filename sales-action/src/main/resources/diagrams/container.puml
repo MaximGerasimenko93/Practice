@@ -1,0 +1,15 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "Пользователь")
+
+System_Boundary(sales_boundary, "Sales Application") {
+    Container(app, "Sales Application", "Java Application", "Консольное приложение для обработки заказов")
+}
+
+System_Ext(files, "Файловая система", "Хранит входные файлы и результаты обработки")
+
+Rel(user, app, "Выбирает файл и получает результат")
+Rel(app, files, "Читает входные файлы и сохраняет результаты")
+
+@enduml

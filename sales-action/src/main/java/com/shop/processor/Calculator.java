@@ -1,0 +1,36 @@
+package com.shop.processor;
+
+import com.shop.entity.Order;
+import com.shop.entity.Sale;
+import com.shop.entity.SaleResult;
+import com.shop.service.SaleCalculator;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Calculator implements SaleCalculator {
+
+    @Override
+    public List<SaleResult> calculate(List<Order> orders, Sale sale) {
+        List<SaleResult> saleResult = new ArrayList<>();
+        int discount = sale.getStartDiscount();
+        final int LOW_BORDER = 0;
+
+        if (orders == null || orders.isEmpty()) {
+            throw new IllegalArgumentException("Ошибка: список не может быть пуст");
+        }
+
+        for (Order order : orders) {
+            BigDecimal amount = BigDecimal.valueOf(order.getAmount());
+            BigDecimal cost = BigDecimal.valueOf(sale.getCost());
+            BigDecimal discountCoefficient = BigDecimal.valueOf(discount).movePointLeft(2);
+            BigDecimal price = amount.multiply(cost).multiply(BigDecimal.ONE.subtract(discountCoefficient));
+            String name = order.getName();
+            saleResult.add(new SaleResult(name, price));
+
+            discount = Math.max(discount - sale.getStep(), LOW_BORDER);
+        }
+        return saleResult;
+    }
+}
